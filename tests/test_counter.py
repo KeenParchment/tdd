@@ -72,6 +72,15 @@ class CounterTest(TestCase):
         response_data = json.loads(no_result.data)
         self.assertEqual(response_data["error"], "Counter not found")
 
+    def test_delete_counter(self):
+        """It should delete a counter"""
+        self.client.post('/counters/delete')
+
+        result = self.client.delete('/counters/delete')
+        self.assertEqual(result.status_code, status.HTTP_204_NO_CONTENT)
+
+        result = self.client.delete('/counters/empty')
+        self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
 
     # helper function
     def _create_counter_and_assert(self, name, expected_status):

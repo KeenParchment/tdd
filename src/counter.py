@@ -38,3 +38,14 @@ def update_counter(name):
 
     COUNTERS[name] += 1
     return {name: COUNTERS[name]}, status.HTTP_200_OK
+
+
+@app.route('/counters/<name>', methods=['DELETE'])
+def delete_counter(name):
+    """Delete a counter"""
+    global COUNTERS
+    if name not in COUNTERS:
+        return {"error": "Counter not found"}, status.HTTP_404_NOT_FOUND
+
+    COUNTERS[name] += 1
+    return {name: COUNTERS[name]}, status.HTTP_204_NO_CONTENT
